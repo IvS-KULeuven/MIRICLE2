@@ -19,12 +19,14 @@
 
 MIRICLE_version="6.00"
 
+# verboseEcho only prints the text if the verbose flag is used.
 function verboseEcho {
   if [ -n "$verbose" ] ; then
     echo $1
   fi
 }
 
+# checkInternet checks if a working internet connection is available and if curl/wget is installed.
 function checkInternet {
   #
   # determine download method
@@ -63,12 +65,49 @@ function checkInternet {
 
   verboseEcho "Internet connection found. Continuing the installation."
 
+  # Determine whether www.miricle.org is up
+  if ! curl --silent --head miricle.org>/dev/null; then
+    echo "www.miricle.org is down."
+    echo "Please try to rerun MIRICLE_install.bash a little later."
+    exit
+  fi
+
   if [ -z "$download" ] ; then
     echo "Neither wget nor curl is present. Please have your system manager install either of them."
     exit
   fi
 }
 
+# Return status code of a comparison
+float_test() {
+     echo | awk 'END { exit ( !( '"$1"')); }'
+}
+
+# checkUpdateOfScript checks if there is a newer version of the script available in GitHub.
+function checkUpdateOfScript {
+  verboseEcho ""
+  verboseEcho "Checking if there is a newer version of the installation script available..."
+  rm -f MIRICLE_install_version
+  $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/MIRICLE_install_version
+  version_on_server=`cat MIRICLE_install_version`
+  verboseEcho "Version of the used installation script is $MIRICLE_version. On the server, I found $version_on_server."
+  uptodate=0
+  float_test "$MIRICLE_version >= $version_on_server" && uptodate=1
+
+  if [ "$uptodate" -eq 1 ]; then
+    verboseEcho "No need to update the MIRICLE install script."
+    rm -f MIRICLE_install_version
+  else
+    verboseEcho "Updating the MIRICLE install script."
+    rm -f MIRICLE_install.bash
+    rm -f MIRICLE_install_version
+    $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/MIRICLE_install.bash
+    chmod +x MIRICLE_install.bash
+    echo "MIRICLE installation script is updated."
+    echo "Please rerun MIRICLE_install.bash to install MIRICLE."
+    exit
+  fi
+}
 
 
 flavor="stable"
@@ -126,5 +165,13 @@ done
 # Check if there is a working internet connection
 checkInternet
 
+# Check if there is a newer version of the installation script
+checkUpdateOfScript
+
+
 #echo $flavor
 #echo "Version $version"
+
+
+# TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
+# TODO: Do we need the X11 development files? -> See line 162 - 175
