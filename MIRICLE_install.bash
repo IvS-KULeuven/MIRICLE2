@@ -133,8 +133,33 @@ function checkAnacondaInstalled {
   fi
 }
 
+# Get the version number to install
+function getVersionNumberToInstall {
+  getVersion=0
+  float_test "$version >= 9999999990" && getVersion=1
+
+  if [ "$getVersion" -eq 1 ]; then
+    echo "Requested installation of latest $miricleInstall version."
+  else
+    verboseEcho "A version number ($version) is given as parameter. Will try to install this version.";
+  fi
+
+  $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/builds/$flavor/buildNumbers
+
+  while read line; do
+    if [ -n "$line" ] ; then
+      if [ $version -ge $line ]; then
+        newversion=$line
+      fi
+    fi
+  done < buildNumbers
+  rm buildNumbers
+
+  version=$newversion
+}
+
 flavor="stable"
-version="-99"
+version="9999999999"
 while [ "$1" != "" ]
 do
    case $1 in
@@ -205,10 +230,11 @@ checkAnacondaInstalled
 # Set MIRICLE_ROOT
 if [ -z "$MIRICLE_ROOT" ] ; then export MIRICLE_ROOT=$HOME/MIRICLE ; fi
 
+# Check the version number to install
+getVersionNumberToInstall
 
+echo "${bold}Requested installation version $version of the $flavor track.${normal}"
 
-#echo $flavor
-#echo "Version $version"
 
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
