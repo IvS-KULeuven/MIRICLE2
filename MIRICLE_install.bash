@@ -19,6 +19,58 @@
 
 MIRICLE_version="6.00"
 
+function verboseEcho {
+  if [ -n "$verbose" ] ; then
+    echo $1
+  fi
+}
+
+function checkInternet {
+  #
+  # determine download method
+  #
+  internet=1
+  which wget 1> /dev/null
+  if [ $? = 0 ] ; then
+    verboseEcho "Using wget to download packages."
+    download="wget -nd -q "
+
+    wget --spider -q http://www.google.com
+    if [ "$?" != 0 ]; then
+      internet=0
+    fi
+  else
+    which curl 1> /dev/null
+    if [ $? = 0 ] ; then
+      verboseEcho "Using curl to download packages."
+      download="curl -O --silent "
+    fi
+
+    # Check for internet connection
+    if curl --silent --head http://www.google.com/ | egrep "20[0-9] Found|30[0-9] Found|200 OK" >/dev/null
+    then
+      internet=1
+    else
+      internet=0
+    fi
+  fi
+
+  if [ $internet -eq 0 ]; then
+      echo "No internet connection found!"
+      echo "Please rerun MIRICLE_install.bash with a working internet connection to install MIRICLE."
+      exit
+  fi
+
+  verboseEcho "Internet connection found. Continuing the installation."
+
+  if [ -z "$download" ] ; then
+    echo "Neither wget nor curl is present. Please have your system manager install either of them."
+    exit
+  fi
+}
+
+
+
 flavor="stable"
 version="-99"
 while [ "$1" != "" ]
@@ -56,8 +108,8 @@ do
      clean=1
      ;;
     "--verbose")
-     echo "Verbose mode"
      verbose=1
+     verboseEcho "Verbose mode"
      ;;
     "--version")
      version=$2
@@ -70,6 +122,9 @@ do
   esac
   shift
 done
+
+# Check if there is a working internet connection
+checkInternet
 
 #echo $flavor
 #echo "Version $version"
