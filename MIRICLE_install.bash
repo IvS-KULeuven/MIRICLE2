@@ -14,10 +14,19 @@
 #      remove logfiles and tarfile
 #    --update
 #      remove existing installation and install the most recent version
+#    --path
+#      Installs the auxiliary data in the given path
 #    --verbose
 #      show all installed python packages at the end of the installation
 
 MIRICLE_version="6.00"
+
+# Make it possible to print bold characters
+bold=`tput bold`
+normal=`tput sgr0`
+red='\033[0;31m'
+green='\033[0;32m'
+black='\033[0m'
 
 # verboseEcho only prints the text if the verbose flag is used.
 function verboseEcho {
@@ -65,7 +74,7 @@ function checkInternet {
 
   verboseEcho "Internet connection found. Continuing the installation."
 
-  # Determine whether www.miricle.org is up
+  # Determine whether www.miricle.org is up.
   if ! curl --silent --head miricle.org>/dev/null; then
     echo "www.miricle.org is down."
     echo "Please try to rerun MIRICLE_install.bash a little later."
@@ -78,7 +87,7 @@ function checkInternet {
   fi
 }
 
-# Return status code of a comparison
+# Return status code of a comparison.
 float_test() {
      echo | awk 'END { exit ( !( '"$1"')); }'
 }
@@ -110,6 +119,20 @@ function checkUpdateOfScript {
 }
 
 
+# Check if anaconda is installed
+function checkAnacondaInstalled {
+  if hash conda 2>/dev/null; then
+    verboseEcho ""
+    verboseEcho "Anaconda is installed, continuiung the installation."
+  else
+    echo ""
+    echo "${bold}First install Anaconda python distribution: https://www.continuum.io/downloads${normal}"
+    echo "If anaconda is already installed on your computer, execute"
+    echo "  ${bold}source activate root${normal}"
+    exit
+  fi
+}
+
 flavor="stable"
 version="-99"
 while [ "$1" != "" ]
@@ -120,6 +143,8 @@ do
      echo ""
      echo "To be able to install MIRICLE, you need at the Anaconda python environment, at least version 4.2. You need the python 2.7 version."
      echo "You can download Anaconda from https://www.continuum.io/downloads"
+     echo ""
+     echo "Auxiliary data will be installed in \$HOME/MIRICLE. If you want to install this data in another location, you can set the MIRICLE_ROOT environment variable to this location, or you can use the --path option together with the script."
      echo ""
      echo "  --help"
      echo "      displays the help for this installation script."
@@ -133,6 +158,8 @@ do
      echo "      show all installed python packages at the end of the installation."
      echo "  --version <version number>"
      echo "      installs the given version (or the latest successfull version before this)."
+     echo "  --path <path location>"
+     echo "      installs the auxiliary data in the given location."
      echo ""
      echo "This is version $MIRICLE_version of the MIRICLE_install.bash install script."
      exit
@@ -154,6 +181,10 @@ do
      version=$2
      shift
      ;;
+    "--path")
+     MIRICLE_ROOT=$2
+     shift
+     ;;
     *)
      echo "Invalid install option. Try with --help option to see the valid options."
      exit
@@ -168,6 +199,13 @@ checkInternet
 # Check if there is a newer version of the installation script
 checkUpdateOfScript
 
+# Check if anaconda is installed
+checkAnacondaInstalled
+
+# Set MIRICLE_ROOT
+if [ -z "$MIRICLE_ROOT" ] ; then export MIRICLE_ROOT=$HOME/MIRICLE ; fi
+
+
 
 #echo $flavor
 #echo "Version $version"
@@ -175,3 +213,14 @@ checkUpdateOfScript
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
 # TODO: Do we need the X11 development files? -> See line 162 - 175
+
+echo ""
+echo "To use the $miricleInstall environment:"
+echo " ${bold}export MIRICLE_ROOT=$MIRICLE_ROOT${normal}"
+echo " ${bold}export PYSYN_CDBS=\$MIRICLE_ROOT/cdbs/${normal}"
+echo ""
+echo " source activate $environment${normal}"
+echo ""
+echo "To switch back to the system python version:"
+echo " ${bold}source deactivate${normal}"
+echo ""
