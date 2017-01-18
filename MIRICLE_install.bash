@@ -292,6 +292,20 @@ if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName'$' | wc -l` -
   conda env remove --yes --name miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 fi
 
+# TODO: Download the finished file from http://www.miricle.org
+# Check the operating system
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  os="osx"
+else
+  os="linux"
+fi
+
+verboseEcho "Downloading conda packages from https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/conda/miricle.$flavor/miricle-$os-py27.0.txt"
+$download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/conda/miricle.$flavorName/miricle-$os-py27.0.txt
+
+echoLog "Creating the miricle$flavorName conda environment"
+conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt
+rm miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
 # TODO: Do we need the X11 development files? -> See line 162 - 175
