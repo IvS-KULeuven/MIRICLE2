@@ -268,13 +268,12 @@ unset LC_CTYPE
 # Set the flavorName
 setFlavorName
 
-source activate root 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+source activate root
 
 # Remove all old MIRICLE environments if the clean option is selected
 if [ -n "$clean" ] ; then
   # Loop over all old MIRICLE environments
   verboseEcho "Removing all the old miricle$flavorName anaconda environments"
-  source activate root 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
   for env in `conda env list | grep miricle$flavorName.2 | awk '{print $1}'`
   do
     echo "${bold}Removing $env${normal}"
