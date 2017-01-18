@@ -24,15 +24,20 @@ MIRICLE_version="6.00"
 # Make it possible to print bold characters
 bold=`tput bold`
 normal=`tput sgr0`
-red='\033[0;31m'
-green='\033[0;32m'
-black='\033[0m'
 
 # verboseEcho only prints the text if the verbose flag is used.
 function verboseEcho {
   if [ -n "$verbose" ] ; then
     echo $1
   fi
+
+  echo $1 >> $LOG/log.txt
+}
+
+# verboseEcho only prints the text if the verbose flag is used.
+function echoLog {
+  echo $1
+  echo $1 | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'  | sed $'s,\x1b(B,,g' >> $LOG/log.txt
 }
 
 # checkInternet checks if a working internet connection is available and if curl/wget is installed.
@@ -67,8 +72,8 @@ function checkInternet {
   fi
 
   if [ $internet -eq 0 ]; then
-      echo "No internet connection found!"
-      echo "Please rerun MIRICLE_install.bash with a working internet connection to install MIRICLE."
+      echoLog "No internet connection found!"
+      echoLog "Please rerun MIRICLE_install.bash with a working internet connection to install MIRICLE."
       exit
   fi
 
@@ -76,13 +81,14 @@ function checkInternet {
 
   # Determine whether www.miricle.org is up.
   if ! curl --silent --head miricle.org>/dev/null; then
-    echo "www.miricle.org is down."
-    echo "Please try to rerun MIRICLE_install.bash a little later."
+    echoLog "www.miricle.org is down."
+    echoLog "Please try to rerun MIRICLE_install.bash a little later."
     exit
   fi
+  verboseEcho "www.miricle.org is up and running."
 
   if [ -z "$download" ] ; then
-    echo "Neither wget nor curl is present. Please have your system manager install either of them."
+    echoLog "Neither wget nor curl is present. Please have your system manager install either of them."
     exit
   fi
 }
@@ -112,8 +118,8 @@ function checkUpdateOfScript {
     rm -f MIRICLE_install_version
     $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/MIRICLE_install.bash
     chmod +x MIRICLE_install.bash
-    echo "MIRICLE installation script is updated."
-    echo "Please rerun MIRICLE_install.bash to install MIRICLE."
+    echoLog "MIRICLE installation script is updated."
+    echoLog "Please rerun MIRICLE_install.bash to install MIRICLE."
     exit
   fi
 }
@@ -125,10 +131,10 @@ function checkAnacondaInstalled {
     verboseEcho ""
     verboseEcho "Anaconda is installed, continuiung the installation."
   else
-    echo ""
-    echo "${bold}First install Anaconda python distribution: https://www.continuum.io/downloads${normal}"
-    echo "If anaconda is already installed on your computer, execute"
-    echo "  ${bold}source activate root${normal}"
+    echoLog ""
+    echoLog "${bold}First install Anaconda python distribution: https://www.continuum.io/downloads${normal}"
+    echoLog "If anaconda is already installed on your computer, execute"
+    echoLog "  ${bold}source activate root${normal}"
     exit
   fi
 }
@@ -139,9 +145,9 @@ function getVersionNumberToInstall {
   float_test "$version >= 9999999990" && getVersion=1
 
   if [ "$getVersion" -eq 1 ]; then
-    echo "Requested installation of latest $miricleInstall version."
+    verboseEcho "Requested installation of latest version from the $flavor track."
   else
-    verboseEcho "A version number ($version) is given as parameter. Will try to install this version.";
+    verboseEcho "Version number $version is given as parameter. Will try to install this version.";
   fi
 
   $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/builds/$flavor/buildNumbers
@@ -151,11 +157,25 @@ function getVersionNumberToInstall {
       if [ $version -ge $line ]; then
         newversion=$line
       fi
+      latestVersion=$line
     fi
   done < buildNumbers
   rm buildNumbers
 
   version=$newversion
+
+  echoLog "${bold}Requested installation version $version of the $flavor track.${normal}"
+
+  echoLog "Latest available $flavor version is $latestVersion."
+}
+
+# Sets the flavor name
+function setFlavorName {
+  if [ $flavor = "stable" ] ; then
+    flavorName=""
+  else
+    flavorName=".$flavor"
+  fi
 }
 
 flavor="stable"
@@ -200,7 +220,7 @@ do
      ;;
     "--verbose")
      verbose=1
-     verboseEcho "Verbose mode"
+     echo "Verbose mode"
      ;;
     "--version")
      version=$2
@@ -218,6 +238,14 @@ do
   shift
 done
 
+# Create and make a log file.
+LOG=~/.miricle/$flavor/`date +%y%m%d-%H%M%S`
+mkdir -p $LOG
+
+echoLog ""
+echoLog "Installation logs found in ${bold}$LOG${normal}"
+echoLog ""
+
 # Check if there is a working internet connection
 checkInternet
 
@@ -233,20 +261,62 @@ if [ -z "$MIRICLE_ROOT" ] ; then export MIRICLE_ROOT=$HOME/MIRICLE ; fi
 # Check the version number to install
 getVersionNumberToInstall
 
-echo "${bold}Requested installation version $version of the $flavor track.${normal}"
+# Work around LC_CTYPE problem on MAC
+LCCTYPE=$LC_CTYPE
+unset LC_CTYPE
 
+# Set the flavorName
+setFlavorName
 
+# Remove all old MIRICLE environments if the clean option is selected
+if [ -n "$clean" ] ; then
+  # Loop over all old MIRICLE environments
+  verboseEcho "Removing all the old miricle$flavorName anaconda environments"
+  source activate root 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  for env in `conda env list | grep miricle$flavorName.2 | awk '{print $1}'`
+  do
+    echo "${bold}Removing $env${normal}"
+    conda env remove -q --yes --name $env 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  done
+fi
+
+# Clone the existing conda environment and remove the conda environment which will be created.
+source activate root 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+# Check if we already have a miricle installation
+if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName'$' | wc -l` -gt 0 ] ; then
+  echoLog ""
+  verboseEcho "Copy miricle$flavorName to miricle$flavorName.`date +%Y%m%d`"
+  echoLog "${bold}Clone the old miricle$flavorName environment${normal}"
+  conda create --yes --name miricle$flavorName.`date +%Y%m%d` --clone miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  verboseEcho "Remove the miricle$flavorName python environment"
+  conda env remove --yes --name miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+fi
+
+# TODO: Download the finished file from http://www.miricle.org
+# Check the operating system
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  os="osx"
+else
+  os="linux"
+fi
+
+verboseEcho "Downloading conda packages from https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/conda/miricle.$flavor/miricle-$os-py27.0.txt"
+$download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/conda/miricle.$flavorName/miricle-$os-py27.0.txt
+
+echoLog "Creating the miricle$flavorName conda environment"
+conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt
+rm miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
 # TODO: Do we need the X11 development files? -> See line 162 - 175
 
-echo ""
-echo "To use the $miricleInstall environment:"
-echo " ${bold}export MIRICLE_ROOT=$MIRICLE_ROOT${normal}"
-echo " ${bold}export PYSYN_CDBS=\$MIRICLE_ROOT/cdbs/${normal}"
-echo ""
-echo " source activate $environment${normal}"
-echo ""
-echo "To switch back to the system python version:"
-echo " ${bold}source deactivate${normal}"
-echo ""
+echoLog ""
+echoLog "To use the $miricleInstall environment:"
+echoLog " ${bold}export MIRICLE_ROOT=$MIRICLE_ROOT${normal}"
+echoLog " ${bold}export PYSYN_CDBS=\$MIRICLE_ROOT/cdbs/${normal}"
+echoLog ""
+echoLog " ${bold}source activate miricle$flavorName${normal}"
+echoLog ""
+echoLog "To switch back to the system python version:"
+echoLog " ${bold}source deactivate${normal}"
+echoLog ""
