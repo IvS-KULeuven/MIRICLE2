@@ -24,15 +24,21 @@ MIRICLE_version="6.00"
 # Make it possible to print bold characters
 bold=`tput bold`
 normal=`tput sgr0`
-red='\033[0;31m'
-green='\033[0;32m'
-black='\033[0m'
 
 # verboseEcho only prints the text if the verbose flag is used.
 function verboseEcho {
   if [ -n "$verbose" ] ; then
     echo $1
   fi
+
+  echo $1 >> $LOG/log.txt
+}
+
+# verboseEcho only prints the text if the verbose flag is used.
+function echoLog {
+  echo $1
+  # TODO: Does this work for linux???
+  echo $1 | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'  | sed $'s,\x1b(B,,g' >> $LOG/log.txt
 }
 
 # checkInternet checks if a working internet connection is available and if curl/wget is installed.
@@ -67,8 +73,8 @@ function checkInternet {
   fi
 
   if [ $internet -eq 0 ]; then
-      echo "No internet connection found!"
-      echo "Please rerun MIRICLE_install.bash with a working internet connection to install MIRICLE."
+      echoLog "No internet connection found!"
+      echoLog "Please rerun MIRICLE_install.bash with a working internet connection to install MIRICLE."
       exit
   fi
 
@@ -76,13 +82,14 @@ function checkInternet {
 
   # Determine whether www.miricle.org is up.
   if ! curl --silent --head miricle.org>/dev/null; then
-    echo "www.miricle.org is down."
-    echo "Please try to rerun MIRICLE_install.bash a little later."
+    echoLog "www.miricle.org is down."
+    echoLog "Please try to rerun MIRICLE_install.bash a little later."
     exit
   fi
+  verboseEcho "www.miricle.org is up and running."
 
   if [ -z "$download" ] ; then
-    echo "Neither wget nor curl is present. Please have your system manager install either of them."
+    echoLog "Neither wget nor curl is present. Please have your system manager install either of them."
     exit
   fi
 }
@@ -112,8 +119,8 @@ function checkUpdateOfScript {
     rm -f MIRICLE_install_version
     $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/MIRICLE_install.bash
     chmod +x MIRICLE_install.bash
-    echo "MIRICLE installation script is updated."
-    echo "Please rerun MIRICLE_install.bash to install MIRICLE."
+    echoLog "MIRICLE installation script is updated."
+    echoLog "Please rerun MIRICLE_install.bash to install MIRICLE."
     exit
   fi
 }
@@ -125,10 +132,10 @@ function checkAnacondaInstalled {
     verboseEcho ""
     verboseEcho "Anaconda is installed, continuiung the installation."
   else
-    echo ""
-    echo "${bold}First install Anaconda python distribution: https://www.continuum.io/downloads${normal}"
-    echo "If anaconda is already installed on your computer, execute"
-    echo "  ${bold}source activate root${normal}"
+    echoLog ""
+    echoLog "${bold}First install Anaconda python distribution: https://www.continuum.io/downloads${normal}"
+    echoLog "If anaconda is already installed on your computer, execute"
+    echoLog "  ${bold}source activate root${normal}"
     exit
   fi
 }
@@ -158,9 +165,18 @@ function getVersionNumberToInstall {
 
   version=$newversion
 
-  echo "${bold}Requested installation version $version of the $flavor track.${normal}"
+  echoLog "${bold}Requested installation version $version of the $flavor track.${normal}"
 
-  echo "Latest available $flavor version is $latestVersion."
+  echoLog "Latest available $flavor version is $latestVersion."
+}
+
+# Sets the flavor name
+function setFlavorName {
+  if [ $flavor = "stable" ] ; then
+    flavorName=""
+  else
+    flavorName=".$flavor"
+  fi
 }
 
 flavor="stable"
@@ -205,7 +221,7 @@ do
      ;;
     "--verbose")
      verbose=1
-     verboseEcho "Verbose mode"
+     echo "Verbose mode"
      ;;
     "--version")
      version=$2
@@ -222,6 +238,14 @@ do
   esac
   shift
 done
+
+# Create and make a log file.
+LOG=~/.miricle/$flavor/`date +%y%m%d-%H%M%S`
+mkdir -p $LOG
+
+echoLog ""
+echoLog "Installation logs found in ${bold}$LOG${normal}"
+echoLog ""
 
 # Check if there is a working internet connection
 checkInternet
@@ -242,25 +266,22 @@ getVersionNumberToInstall
 LCCTYPE=$LC_CTYPE
 unset LC_CTYPE
 
-# Create and make a log file.
-LOG=~/.miricle/$flavor/`date +%y%m%d-%H%M%S`
-mkdir -p $LOG
+# Set the flavorName
+setFlavorName
 
-echo ""
-echo "Installation logs found in ${bold}$LOG${normal}"
-echo ""
+# Check if we already have a miricle installation
 
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
 # TODO: Do we need the X11 development files? -> See line 162 - 175
 
-echo ""
-echo "To use the $miricleInstall environment:"
-echo " ${bold}export MIRICLE_ROOT=$MIRICLE_ROOT${normal}"
-echo " ${bold}export PYSYN_CDBS=\$MIRICLE_ROOT/cdbs/${normal}"
-echo ""
-echo " source activate $environment${normal}"
-echo ""
-echo "To switch back to the system python version:"
-echo " ${bold}source deactivate${normal}"
-echo ""
+echoLog ""
+echoLog "To use the $miricleInstall environment:"
+echoLog " ${bold}export MIRICLE_ROOT=$MIRICLE_ROOT${normal}"
+echoLog " ${bold}export PYSYN_CDBS=\$MIRICLE_ROOT/cdbs/${normal}"
+echoLog ""
+echoLog " ${bold}source activate miricle$flavorName${normal}"
+echoLog ""
+echoLog "To switch back to the system python version:"
+echoLog " ${bold}source deactivate${normal}"
+echoLog ""
