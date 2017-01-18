@@ -238,6 +238,18 @@ if [ -z "$MIRICLE_ROOT" ] ; then export MIRICLE_ROOT=$HOME/MIRICLE ; fi
 # Check the version number to install
 getVersionNumberToInstall
 
+# Work around LC_CTYPE problem on MAC
+LCCTYPE=$LC_CTYPE
+unset LC_CTYPE
+
+# Create and make a log file.
+LOG=~/.miricle/$flavor/`date +%y%m%d-%H%M%S`
+mkdir -p $LOG
+
+echo ""
+echo "Installation logs found in ${bold}$LOG${normal}"
+echo ""
+
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
 # TODO: Do we need the X11 development files? -> See line 162 - 175
