@@ -37,7 +37,6 @@ function verboseEcho {
 # verboseEcho only prints the text if the verbose flag is used.
 function echoLog {
   echo $1
-  # TODO: Does this work for linux???
   echo $1 | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'  | sed $'s,\x1b(B,,g' >> $LOG/log.txt
 }
 
@@ -269,7 +268,29 @@ unset LC_CTYPE
 # Set the flavorName
 setFlavorName
 
+# Remove all old MIRICLE environments if the clean option is selected
+if [ -n "$clean" ] ; then
+  # Loop over all old MIRICLE environments
+  verboseEcho "Removing all the old miricle$flavorName anaconda environments"
+  source activate root 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  for env in `conda env list | grep miricle$flavorName.2 | awk '{print $1}'`
+  do
+    echo "${bold}Removing $env${normal}"
+    conda env remove -q --yes --name $env 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  done
+fi
+
+# Clone the existing conda environment and remove the conda environment which will be created.
+source activate root 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 # Check if we already have a miricle installation
+if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName'$' | wc -l` -gt 0 ] ; then
+  echoLog ""
+  verboseEcho "Copy miricle$flavorName to miricle$flavorName.`date +%Y%m%d`"
+  echoLog "${bold}Clone the old miricle$flavorName environment${normal}"
+  conda create --yes --name miricle$flavorName.`date +%Y%m%d` --clone miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  verboseEcho "Remove the miricle$flavorName python environment"
+  conda env remove --yes --name miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+fi
 
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
