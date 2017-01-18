@@ -139,9 +139,9 @@ function getVersionNumberToInstall {
   float_test "$version >= 9999999990" && getVersion=1
 
   if [ "$getVersion" -eq 1 ]; then
-    echo "Requested installation of latest $miricleInstall version."
+    verboseEcho "Requested installation of latest version from the $flavor track."
   else
-    verboseEcho "A version number ($version) is given as parameter. Will try to install this version.";
+    verboseEcho "Version number $version is given as parameter. Will try to install this version.";
   fi
 
   $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/builds/$flavor/buildNumbers
@@ -151,11 +151,16 @@ function getVersionNumberToInstall {
       if [ $version -ge $line ]; then
         newversion=$line
       fi
+      latestVersion=$line
     fi
   done < buildNumbers
   rm buildNumbers
 
   version=$newversion
+
+  echo "${bold}Requested installation version $version of the $flavor track.${normal}"
+
+  echo "Latest available $flavor version is $latestVersion."
 }
 
 flavor="stable"
@@ -232,9 +237,6 @@ if [ -z "$MIRICLE_ROOT" ] ; then export MIRICLE_ROOT=$HOME/MIRICLE ; fi
 
 # Check the version number to install
 getVersionNumberToInstall
-
-echo "${bold}Requested installation version $version of the $flavor track.${normal}"
-
 
 
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
