@@ -10,7 +10,4 @@ git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda
 mkdir -p /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 cp conda/miricle-*-py27.0.txt /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
-echo ${BUILD_NUMBER} >> /srv/www/www.miricle.org/MIRICLE2/devel/buildNumbers
-
-
 # TODO: Install and test!
