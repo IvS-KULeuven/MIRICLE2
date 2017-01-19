@@ -20,6 +20,7 @@ https://repo.continuum.io/pkgs/free/osx-64/freetype-2.5.5-1.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/functools32-3.2.3.2-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/futures-3.0.5-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/get_terminal_size-1.0.0-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/glueviz-0.9.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/h5py-2.6.0-np111py27_2.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/hdf5-1.8.17-1.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/heapdict-1.0.0-py27_1.tar.bz2
@@ -89,6 +90,7 @@ https://repo.continuum.io/pkgs/free/osx-64/zlib-1.2.8-3.tar.bz2
 
 https://conda.anaconda.org/astropy/osx-64/ginga-2.6.1-py27_0.tar.bz2
 
+http://ssb.stsci.edu/astroconda/osx-64/pywcs-1.12.1-py27_1.tar.bz2
 http://ssb.stsci.edu/astroconda/osx-64/specutils-0.2.1-py27_1.tar.bz2
 http://ssb.stsci.edu/astroconda/osx-64/specviz-0.2.3-py27_0.tar.bz2
 
