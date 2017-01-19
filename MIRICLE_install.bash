@@ -150,7 +150,7 @@ function getVersionNumberToInstall {
     verboseEcho "Version number $version is given as parameter. Will try to install this version.";
   fi
 
-  $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/builds/$flavor/buildNumbers
+  $download http://www.miricle.org/MIRICLE2/$flavor/buildNumbers
 
   while read line; do
     if [ -n "$line" ] ; then
@@ -292,7 +292,6 @@ if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName'$' | wc -l` -
   conda env remove --yes --name miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 fi
 
-# TODO: Download the finished file from http://www.miricle.org
 # Check the operating system
 if [[ "$OSTYPE" == "darwin"* ]]; then
   os="osx"
@@ -300,8 +299,8 @@ else
   os="linux"
 fi
 
-verboseEcho "Downloading conda packages from https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/conda/miricle.$flavor/miricle-$os-py27.0.txt"
-$download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/conda/miricle.$flavor/miricle-$os-py27.0.txt
+verboseEcho "Downloading conda packages from http://www.miricle.org/MIRICLE2/$flavor/$version/miricle-$os-py27.0.txt"
+$download http://www.miricle.org/MIRICLE2/$flavor/$version/miricle-$os-py27.0.txt
 
 echoLog "Creating the miricle$flavorName conda environment"
 conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
