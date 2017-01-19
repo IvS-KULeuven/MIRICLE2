@@ -1,6 +1,8 @@
 # Set up the anaconda environment
 ./00SetupAnaconda.sh
 
+rm -rf conda
+
 # Check out the conda-devel branch with a list of all conda packages to install
 git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda
 
