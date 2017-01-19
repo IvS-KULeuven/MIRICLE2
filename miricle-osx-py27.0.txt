@@ -29,6 +29,10 @@ https://repo.continuum.io/pkgs/free/osx-64/jbig-2.1-0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/jinja2-2.8-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/jpeg-8d-2.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/jsonschema-2.5.1-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/jupyter-1.0.0-py27_3.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/jupyter_client-4.4.0-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/jupyter_console-5.0.0-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/jupyter_core-4.2.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/libpng-1.6.22-0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/libtiff-4.0.6-2.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/locket-0.2.0-py27_1.tar.bz2
@@ -79,10 +83,11 @@ https://repo.continuum.io/pkgs/free/osx-64/wheel-0.29.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/xz-5.2.2-0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/yaml-0.1.6-0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/zlib-1.2.8-3.tar.bz2
+
 https://conda.anaconda.org/astropy/osx-64/ginga-2.6.1-py27_0.tar.bz2
+
 http://ssb.stsci.edu/astroconda/osx-64/specutils-0.2.1-py27_1.tar.bz2
 http://ssb.stsci.edu/astroconda/osx-64/specviz-0.2.3-py27_0.tar.bz2
-
 
 http://ssb.stsci.edu/conda-dev/osx-64/appdirs-1.4.0-py27_0.tar.bz2
 http://ssb.stsci.edu/conda-dev/osx-64/asdf-1.2.1.dev12-np111py27_0.tar.bz2
