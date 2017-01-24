@@ -91,6 +91,11 @@ https://repo.continuum.io/pkgs/free/osx-64/zlib-1.2.8-3.tar.bz2
 
 https://conda.anaconda.org/astropy/osx-64/ginga-2.6.1-py27_0.tar.bz2
 
+https://anaconda.org/astropy/spherical-geometry/1.0.6/download/osx-64/spherical-geometry-1.0.6-py27_0.tar.bz2
+https://anaconda.org/bioconda/pysftp/0.2.8/download/osx-64/pysftp-0.2.8-py27_0.tar.bz2
+
+http://ssb.stsci.edu/astroconda/osx-64/astroimtools-0.1.1-py27_1.tar.bz2
+http://ssb.stsci.edu/astroconda/osx-64/imexam-0.6.3-np111py27_0.tar.bz2
 http://ssb.stsci.edu/astroconda/osx-64/pywcs-1.12.1-py27_1.tar.bz2
 http://ssb.stsci.edu/astroconda/osx-64/specutils-0.2.1-py27_1.tar.bz2
 http://ssb.stsci.edu/astroconda/osx-64/specviz-0.2.3-py27_0.tar.bz2
