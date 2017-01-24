@@ -50,6 +50,7 @@ https://repo.continuum.io/pkgs/free/osx-64/pandas-0.19.1-np111py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/partd-0.3.6-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/path.py-8.2.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/pathlib2-2.1.0-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/petl-1.1.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/pexpect-4.0.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/pickleshare-0.7.4-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/pillow-3.4.2-py27_0.tar.bz2
