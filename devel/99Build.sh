@@ -30,7 +30,14 @@ echo "    - python" >> meta.yaml
 echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
+
 cd ..
+
+
+export PATH=/export/disk/anaconda.42/bin:$PATH
+
+source activate root
+
 conda build cr-sim-ramp-fits --output-folder=/srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/cr-sim-ramp-fits-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/conda/miricle-linux-py27.0.txt
