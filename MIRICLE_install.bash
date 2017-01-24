@@ -306,6 +306,11 @@ echoLog "Creating the miricle$flavorName conda environment"
 conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 rm miricle-$os-py27.0.txt
 
+# Do we still need to install some packages manually... Like stscipython
+#pip install stscipython >$LOG/stscipython.log 2>&1
+#pipResult $? stscipython
+
+
 # TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
 # TODO: Do we need the X11 development files? -> See line 162 - 175
 
