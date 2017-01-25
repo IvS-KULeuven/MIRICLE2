@@ -47,6 +47,6 @@ echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/cr-sim-ramp-f
 conda build purge
 
 # Copy the MAC installations to the correct directory
-scp -r munki:/Users/jenkins/condaBuild/osx-64 /srw/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+scp -r munki:/Users/jenkins/condaBuild/osx-64 /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
 # TODO: Install and test!
