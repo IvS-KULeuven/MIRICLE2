@@ -39,9 +39,11 @@ export PATH=/Users/jenkins/anaconda2/bin:$PATH
 
 source activate root
 
-conda build cr-sim-ramp-fit --output-folder=/srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+rm -rf /Users/jenkins/condaBuild
+mkdir /Users/jenkins/condaBuild
+conda build cr-sim-ramp-fit --output-folder=/Users/jenkins/condaBuild/${BUILD_NUMBER}
 
-echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
+#echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
 conda build purge
 
 # TODO: Install and test!
