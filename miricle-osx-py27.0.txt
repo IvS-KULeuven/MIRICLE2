@@ -53,6 +53,7 @@ https://repo.continuum.io/pkgs/free/osx-64/pathlib2-2.1.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/petl-1.1.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/pexpect-4.0.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/pickleshare-0.7.4-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/pil-1.1.7-py27_2.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/pillow-3.4.2-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/prompt_toolkit-1.0.9-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/ptyprocess-0.5.1-py27_0.tar.bz2
