@@ -5,7 +5,7 @@ rm -rf conda-devel
 git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda-devel
 mv conda-devel/miricle-osx-py27.0.txt .
 
-bash jenkins/devel/01TestDevelCondaPackageInstallation.sh
+bash jenkins/devel/01TestDevelCondaPackageInstallationMac.sh
 
 export PATH=/Users/jenkins/anaconda2/bin:$PATH
 
