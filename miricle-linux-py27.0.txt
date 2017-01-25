@@ -90,8 +90,8 @@ https://repo.continuum.io/pkgs/free/linux-64/yaml-0.1.6-0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/zlib-1.2.8-3.tar.bz2
 
 https://conda.anaconda.org/astropy/linux-64/ginga-2.6.1-py27_0.tar.bz2
+https://conda.anaconda.org/astropy/linux-64/spherical-geometry-1.0.6-py27_0.tar.bz2
 
-https://anaconda.org/astropy/spherical-geometry/1.0.6/download/linux-64/spherical-geometry-1.0.6-py27_0.tar.bz2
 https://anaconda.org/bioconda/pysftp/0.2.8/download/linux-64/pysftp-0.2.8-py27_0.tar.bz2
 
 http://ssb.stsci.edu/astroconda/linux-64/astroimtools-0.1.1-py27_1.tar.bz2
