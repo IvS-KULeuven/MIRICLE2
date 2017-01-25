@@ -10,7 +10,7 @@ git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda
 mkdir -p /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 cp conda/miricle-*-py27.0.txt /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
-svn checkout svn+https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit
+svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit
 cd cr_sim_ramp_fit
 rm -rf cr-sim-ramp-fit
 mkdir cr-sim-ramp-fit
