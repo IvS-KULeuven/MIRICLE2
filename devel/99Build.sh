@@ -46,6 +46,7 @@ echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/cr-sim-ramp-f
 
 conda build purge
 
+cd ..
 
 rm -rf miri
 svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/teams/miri
@@ -56,7 +57,7 @@ cd miri
 touch meta.yaml
 echo "package:" > meta.yaml
 echo "  name: miri" >> meta.yaml
-version=`grep version ../lib/__init__.py | sed "s/__version__ = '//g"  | sed "s/'//g"`
+version=`grep version ../lib/__init__.py | sed "s/__version__ = '//g"  | sed "s/'//g"`
 echo "  version: \"$version\"" >> meta.yaml
 echo "" >> meta.yaml
 echo "source:" >> meta.yaml
@@ -69,13 +70,14 @@ echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
 cd ..
-conda build miri --output-folder=/tmp/
+conda build miri --output-folder=/srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/miri-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/miri-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
 
 conda build purge
 
+cd ..
 
 # Copy the MAC installations to the correct directory
 scp -r munki:/Users/jenkins/condaBuild/osx-64 /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
