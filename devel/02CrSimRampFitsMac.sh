@@ -3,11 +3,11 @@ git clone -b jenkins https://github.com/IvS-KULeuven/MIRICLE2.git jenkins
 
 rm -rf conda-devel
 git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda-devel
-mv conda-devel/miricle-linux-py27.0.txt .
+mv conda-devel/miricle-osx-py27.0.txt .
 
 bash jenkins/devel/01TestDevelCondaPackageInstallation.sh
 
-export PATH=/export/disk/anaconda.42/bin:$PATH
+export PATH=/Users/jenkins/anaconda2/bin:$PATH
 
 source activate miricle.devel
 
@@ -32,5 +32,5 @@ echo "    - python" >> meta.yaml
 cd ..
 conda build cr-sim-ramp-fits --output-folder=/tmp/
 
-conda install /tmp/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
+conda install /tmp/osx-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
 conda build purge
