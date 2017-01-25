@@ -1,4 +1,4 @@
-export PATH=/export/disk/anaconda2/bin:$PATH
+export PATH=/Users/jenkins/anaconda2/bin:$PATH
 
 source activate root
 
