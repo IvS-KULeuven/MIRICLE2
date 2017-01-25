@@ -1,5 +1,5 @@
 # Set up the anaconda environment
-./00SetupAnaconda.sh
+./00SetupAnacondaMac.sh
 
 rm -rf conda
 
@@ -7,8 +7,8 @@ rm -rf conda
 git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda
 
 # Put the conda environment file in the correct directory
-mkdir -p /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
-cp conda/miricle-*-py27.0.txt /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+#mkdir -p /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+#cp conda/miricle-*-py27.0.txt /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
 rm -rf cr_sim_ramp_fit
 svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit
@@ -35,13 +35,13 @@ echo "    - python" >> meta.yaml
 cd ..
 
 
-export PATH=/export/disk/anaconda.42/bin:$PATH
+export PATH=/Users/jenkins/anaconda2/bin:$PATH
 
 source activate root
 
 conda build cr-sim-ramp-fit --output-folder=/srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
-echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
+echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
 conda build purge
 
 # TODO: Install and test!
