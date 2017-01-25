@@ -7,6 +7,10 @@
 
 ## Version 5.x
 
++ ### 25/01/2017
+
+  + 5.38 (Wim De Meester): Bug 270: Can no longer run simulations: mirisim (PIL?) doesn't find libjpeg.so.9
+
 + ### 24/01/2017
 
  + 5.37 (Wim De Meester): Bug 280: VisibleDeprecationWarning for float as index has become TypeError in numpy 1.12
