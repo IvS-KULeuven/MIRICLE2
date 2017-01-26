@@ -1,3 +1,5 @@
+outputdir=$1
+
 rm -rf jenkins
 git clone -b jenkins https://github.com/IvS-KULeuven/MIRICLE2.git jenkins
 
@@ -38,8 +40,8 @@ echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
 cd ..
-rm -rf /tmp/linux-64
-conda build cr-sim-ramp-fit --output-folder=/tmp/
+rm -rf $outputdir/linux-64/cr-sim-ramp-fit*
+conda build cr-sim-ramp-fit --output-folder=$outputdir/
 
-conda install /tmp/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
+conda install $outputdir/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
 conda build purge
