@@ -34,7 +34,7 @@ echo "" >> meta.yaml
 echo "requirements:" >> meta.yaml
 echo "  build:" >> meta.yaml
 echo "    - python" >> meta.yaml
-stsciversion=`grep stsci.tools ../miricle-linux-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/stsci.tools-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+stsciversion=`grep stsci.tools ../miricle-osx-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/osx-64\/stsci.tools-//g" | sed "s/-np111py27_0.tar.bz2//g"`
 echo "    - stsci.tools $stsciversion" >> meta.yaml
 echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml

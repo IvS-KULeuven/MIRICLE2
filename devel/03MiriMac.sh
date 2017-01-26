@@ -31,13 +31,13 @@ echo "" >> meta.yaml
 echo "requirements:" >> meta.yaml
 echo "  build:" >> meta.yaml
 echo "    - python" >> meta.yaml
-stsciversion=`grep stsci.tools ../miricle-osx-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/stsci.tools-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+stsciversion=`grep stsci.tools ../miricle-osx-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/osx-64\/stsci.tools-//g" | sed "s/-np111py27_0.tar.bz2//g"`
 echo "    - stsci.tools $stsciversion" >> meta.yaml
-scipyversion=`grep scipy ../miricle-osx-py27.0.txt | sed "s/https:\/\/repo.continuum.io\/pkgs\/free\/linux-64\/scipy-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+scipyversion=`grep scipy ../miricle-osx-py27.0.txt | sed "s/https:\/\/repo.continuum.io\/pkgs\/free\/osx-64\/scipy-//g" | sed "s/-np111py27_0.tar.bz2//g"`
 echo "    - scipy $scipyversion" >> meta.yaml
-asdfversion=`grep asdf ../miricle-osx-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/asdf-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+asdfversion=`grep asdf ../miricle-osx-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/osx-64\/asdf-//g" | sed "s/-np111py27_0.tar.bz2//g"`
 echo "    - asdf $asdfversion" >> meta.yaml
-jwstversion=`grep jwst ../miricle-osx-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/jwst-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+jwstversion=`grep jwst ../miricle-osx-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/osx-64\/jwst-//g" | sed "s/-np111py27_0.tar.bz2//g"`
 echo "    - jwst $jwstversion" >> meta.yaml
 echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
