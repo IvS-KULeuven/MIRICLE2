@@ -43,10 +43,12 @@ echo "    - jwst $jwstversion" >> meta.yaml
 echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
+cd ..
+
+# TODO: Fix these errors in svn
 rm datamodels/doc/source/tutorial/tutorial
 rm datamodels/doc/source/pyplot/pyplot
 
-cd ..
 rm -rf $outputdir/linux-64/miri-*
 conda build miri --output-folder=$outputdir/
 
