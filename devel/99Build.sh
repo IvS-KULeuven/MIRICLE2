@@ -10,13 +10,21 @@ git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda
 mkdir -p /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 cp conda/miricle-*-py27.0.txt /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
-
+rm -rf cr_sim_ramp_fit
+svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit
+cd cr_sim_ramp_fit
+mv ../02CrSimRampFit.sh .
 ./02CrSimRampFit.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
 # Add cr-sim-ramp-fit to the install files
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
 
+cd ..
+rm -rf miri
+svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/teams/miri
+cd miri
+mv ../03Miri.sh .
 ./03Miri.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/miri-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/miri-$version-py27_0.tar.bz2" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
