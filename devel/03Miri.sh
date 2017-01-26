@@ -52,5 +52,5 @@ rm datamodels/doc/source/pyplot/pyplot
 rm -rf $outputdir/linux-64/miri-*
 conda build miri --output-folder=$outputdir/
 
-conda install $outputdir/miri-$version-py27_0.tar.bz2
+conda install $outputdir/linux-64/miri-$version-py27_0.tar.bz2
 conda build purge
