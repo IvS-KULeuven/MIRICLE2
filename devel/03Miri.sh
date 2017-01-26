@@ -1,3 +1,5 @@
+outputdir=$1
+
 rm -rf jenkins
 git clone -b jenkins https://github.com/IvS-KULeuven/MIRICLE2.git jenkins
 
@@ -22,16 +24,31 @@ version=`grep version ../lib/__init__.py | sed "s/__version__ = '//g"  | sed "s/
 echo "  version: \"$version\"" >> meta.yaml
 echo "" >> meta.yaml
 echo "source:" >> meta.yaml
-echo "  url: https://aeon.stsci.edu/ssb/svn/jwst/trunk/teams/miri" >> meta.yaml
+echo "  path: ../" >> meta.yaml
+echo "" >> meta.yaml
+echo "build:" >> meta.yaml
+echo "  script: python setup.py install" >> meta.yaml
 echo "" >> meta.yaml
 echo "requirements:" >> meta.yaml
 echo "  build:" >> meta.yaml
 echo "    - python" >> meta.yaml
+stsciversion=`grep stsci.tools ../miricle-linux-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/stsci.tools-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+echo "    - stsci.tools $stsciversion" >> meta.yaml
+scipyversion=`grep scipy ../miricle-linux-py27.0.txt | sed "s/https:\/\/repo.continuum.io\/pkgs\/free\/linux-64\/scipy-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+echo "    - scipy $scipyversion" >> meta.yaml
+asdfversion=`grep asdf ../miricle-linux-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/asdf-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+echo "    - asdf $asdfversion" >> meta.yaml
+jwstversion=`grep jwst ../miricle-linux-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/jwst-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+echo "    - jwst $jwstversion" >> meta.yaml
 echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
-cd ..
-conda build miri --output-folder=/tmp/
+rm datamodels/doc/source/tutorial/tutorial
+rm datamodels/doc/source/pyplot/pyplot
 
-conda install /tmp/linux-64/miri-$version-py27_0.tar.bz2
+cd ..
+rm -rf $outputdir/linux-64/miri-*
+conda build miri --output-folder=$outputdir/
+
+conda install $outputdir/miri-$version-py27_0.tar.bz2
 conda build purge
