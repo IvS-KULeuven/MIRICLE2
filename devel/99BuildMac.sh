@@ -6,47 +6,9 @@ rm -rf conda
 # Check out the conda-devel branch with a list of all conda packages to install
 git clone -b conda-devel https://github.com/IvS-KULeuven/MIRICLE2.git conda
 
-# Put the conda environment file in the correct directory
-#mkdir -p /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
-#cp conda/miricle-*-py27.0.txt /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
-
-rm -rf cr_sim_ramp_fit
-svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit
-cd cr_sim_ramp_fit
-rm -rf cr-sim-ramp-fit
-mkdir cr-sim-ramp-fit
-cd cr-sim-ramp-fit
-touch meta.yaml
-echo "package:" > meta.yaml
-echo "  name: cr-sim-ramp-fit" >> meta.yaml
-version=`grep version ../defsetup.py | sed "s/     'version' : '//g"  | sed "s/',//g"`
-echo "  version: \"$version\"" >> meta.yaml
-echo "" >> meta.yaml
-echo "source:" >> meta.yaml
-echo "  url: https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit" >> meta.yaml
-echo "" >> meta.yaml
-echo "requirements:" >> meta.yaml
-echo "  build:" >> meta.yaml
-echo "    - python" >> meta.yaml
-echo "  run:" >> meta.yaml
-echo "    - python" >> meta.yaml
-
-
-cd ..
-
-
-export PATH=/Users/jenkins/anaconda2/bin:$PATH
-
-source activate root
-
 rm -rf /Users/jenkins/condaBuild
-mkdir /Users/jenkins/condaBuild
-conda build cr-sim-ramp-fit --output-folder=/Users/jenkins/condaBuild/
+./02CrSimRampFitMac.sh /Users/jenkins/condaBuild/
 
-conda build purge
-
-
-cd ..
 
 rm -rf miri
 svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/teams/miri
