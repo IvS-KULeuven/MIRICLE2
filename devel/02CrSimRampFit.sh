@@ -24,7 +24,8 @@ echo "source:" >> meta.yaml
 echo "  path: ../" >> meta.yaml
 echo "" >> meta.yaml
 echo "build:" >> meta.yaml
-echo "  script: python setup.py install"
+echo "  script: python setup.py install" >> meta.yaml
+echo "" >> meta.yaml
 echo "requirements:" >> meta.yaml
 echo "  build:" >> meta.yaml
 echo "    - python" >> meta.yaml
