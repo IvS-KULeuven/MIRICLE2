@@ -21,7 +21,7 @@ version=`grep version ../defsetup.py | sed "s/     'version' : '//g"  | sed "s/'
 echo "  version: \"$version\"" >> meta.yaml
 echo "" >> meta.yaml
 echo "source:" >> meta.yaml
-echo "  url: https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit" >> meta.yaml
+echo "  path: ../" >> meta.yaml
 echo "" >> meta.yaml
 echo "requirements:" >> meta.yaml
 echo "  build:" >> meta.yaml
@@ -34,3 +34,5 @@ conda build cr-sim-ramp-fit --output-folder=/tmp/
 
 conda install /tmp/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
 conda build purge
+
+exit 5
