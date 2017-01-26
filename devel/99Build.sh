@@ -16,7 +16,7 @@ cd cr_sim_ramp_fit
 mv ../02CrSimRampFit.sh .
 ./02CrSimRampFit.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
-file=`ls /srw/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep cr-sim-ramp-fit`
+file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep cr-sim-ramp-fit`
 
 # Add cr-sim-ramp-fit to the install files
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/$file" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
@@ -29,7 +29,7 @@ cd miri
 mv ../03Miri.sh .
 ./03Miri.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
-file=`ls /srw/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep miri-`
+file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep miri-`
 
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/$file" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/$file" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
