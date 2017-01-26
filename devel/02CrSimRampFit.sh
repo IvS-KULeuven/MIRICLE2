@@ -11,6 +11,9 @@ export PATH=/export/disk/anaconda.42/bin:$PATH
 
 source activate miricle.devel
 
+# We add the stsci conda-dev channel to be able to install stscitools
+conda config --add channels http://ssb.stsci.edu/conda-dev/
+
 rm -rf cr-sim-ramp-fit
 mkdir cr-sim-ramp-fit
 cd cr-sim-ramp-fit
@@ -29,6 +32,8 @@ echo "" >> meta.yaml
 echo "requirements:" >> meta.yaml
 echo "  build:" >> meta.yaml
 echo "    - python" >> meta.yaml
+stsciversion=`grep stsci.tools ../miricle-linux-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/stsci.tools-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+echo "    - stsci.tools $stsciversion" >> meta.yaml
 echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
@@ -37,5 +42,8 @@ conda build cr-sim-ramp-fit --output-folder=/tmp/
 
 conda install /tmp/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
 conda build purge
+
+# Make the osx version
+conda convert --platform osx-64 /tmp/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2 -o /tmp/
 
 exit 5
