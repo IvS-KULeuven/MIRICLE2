@@ -306,7 +306,7 @@ echoLog "Creating the miricle$flavorName conda environment"
 conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 rm miricle-$os-py27.0.txt
 
-# Do we still need to install some packages manually... Like stscipython
+# Do we still need to install some packages manually... Like stscipython and psfutils (https://github.com/spacetelescope/psfutils.git)
 #pip install stscipython >$LOG/stscipython.log 2>&1
 #pipResult $? stscipython
 
