@@ -38,12 +38,8 @@ echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
 cd ..
+rm -rf /tmp/linux-64
 conda build cr-sim-ramp-fit --output-folder=/tmp/
 
 conda install /tmp/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
 conda build purge
-
-# Make the osx version
-conda convert --platform osx-64 /tmp/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2 -o /tmp/
-
-exit 5

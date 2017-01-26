@@ -11,6 +11,9 @@ export PATH=/Users/jenkins/anaconda2/bin:$PATH
 
 source activate miricle.devel
 
+# We add the stsci conda-dev channel to be able to install stscitools
+conda config --add channels http://ssb.stsci.edu/conda-dev/
+
 rm -rf cr-sim-ramp-fit
 mkdir cr-sim-ramp-fit
 cd cr-sim-ramp-fit
@@ -21,11 +24,16 @@ version=`grep version ../defsetup.py | sed "s/     'version' : '//g"  | sed "s/'
 echo "  version: \"$version\"" >> meta.yaml
 echo "" >> meta.yaml
 echo "source:" >> meta.yaml
-echo "  url: https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit" >> meta.yaml
+echo "  path: ../" >> meta.yaml
+echo "" >> meta.yaml
+echo "build:" >> meta.yaml
+echo "  script: python setup.py install" >> meta.yaml
 echo "" >> meta.yaml
 echo "requirements:" >> meta.yaml
 echo "  build:" >> meta.yaml
 echo "    - python" >> meta.yaml
+stsciversion=`grep stsci.tools ../miricle-linux-py27.0.txt | sed "s/http:\/\/ssb.stsci.edu\/conda-dev\/linux-64\/stsci.tools-//g" | sed "s/-np111py27_0.tar.bz2//g"`
+echo "    - stsci.tools $stsciversion" >> meta.yaml
 echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
