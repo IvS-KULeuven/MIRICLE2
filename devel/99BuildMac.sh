@@ -32,6 +32,11 @@ echo "  run:" >> meta.yaml
 echo "    - python" >> meta.yaml
 
 cd ..
+
+export PATH=/export/disk/anaconda.42/bin:$PATH
+
+source activate miricle.devel
+
 conda build miri --output-folder=/Users/jenkins/condaBuild
 
 conda build purge
