@@ -20,8 +20,7 @@ cd pyspecsim
 touch meta.yaml
 echo "package:" > meta.yaml
 echo "  name: pyspecsim" >> meta.yaml
-version=`grep version ../lib/pySpecSim/__init__.py | sed 's/__version__ = "//g'  | sed 's/"//g'`echo "  version: \"$version\"" >> meta.yaml
-echo "" >> meta.yaml
+version=`grep version ../lib/pySpecSim/__init__.py | sed 's/__version__ = "//g'  | sed 's/"//g'`echo "  version: \"$version\"" >> meta.yamlecho "" >> meta.yaml
 echo "source:" >> meta.yaml
 echo "  path: ../" >> meta.yaml
 echo "" >> meta.yaml
