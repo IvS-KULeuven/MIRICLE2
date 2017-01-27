@@ -21,3 +21,12 @@ svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/teams/miri
 cd miri
 mv ../03MiriMac.sh .
 ./03MiriMac.sh /Users/jenkins/condaBuild/
+
+
+# Build pyspecsim
+cd ..
+rm -rf pySpecSim
+svn checkout https://forge.roe.ac.uk/svn/pySpecSim/trunk/pySpecSim
+cd pySpecSim
+mv ../04PySpecSimMac.sh .
+./04PySpecSimMac.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
