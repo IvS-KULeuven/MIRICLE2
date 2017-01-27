@@ -26,7 +26,7 @@ mv ../03MiriMac.sh .
 # Build pyspecsim
 cd ..
 rm -rf pySpecSim
-svn checkout https://forge.roe.ac.uk/svn/pySpecSim/trunk/pySpecSim
+svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/pySpecSim/trunk/pySpecSim
 cd pySpecSim
 mv ../04PySpecSimMac.sh .
 ./04PySpecSimMac.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
