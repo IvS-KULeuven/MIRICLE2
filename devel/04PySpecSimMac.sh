@@ -1,3 +1,9 @@
+function checkError {
+  if [ $? -ge "1" ] ; then
+    exit 1
+  fi
+}
+
 outputdir=$1
 
 rm -rf jenkins
@@ -38,6 +44,10 @@ cd ..
 
 rm -rf $outputdir/osx-64/pyspecsim-*
 conda build pyspecsim --output-folder=$outputdir/
+checkError
 
 conda install $outputdir/osx-64/pyspecsim-$version-py27_0.tar.bz2
+checkError
+
 conda build purge
+checkError

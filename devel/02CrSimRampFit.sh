@@ -1,3 +1,9 @@
+function checkError {
+  if [ $? -ge "1" ] ; then
+    exit 1
+  fi
+}
+
 outputdir=$1
 
 rm -rf jenkins
@@ -42,6 +48,10 @@ echo "    - python" >> meta.yaml
 cd ..
 rm -rf $outputdir/linux-64/cr-sim-ramp-fit*
 conda build cr-sim-ramp-fit --output-folder=$outputdir/
+checkError
 
 conda install $outputdir/linux-64/cr-sim-ramp-fit-$version-py27_0.tar.bz2
+checkError
+
 conda build purge
+checkError

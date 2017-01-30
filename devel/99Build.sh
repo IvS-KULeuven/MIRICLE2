@@ -1,5 +1,12 @@
+function checkError {
+  if [ $? -ge "1" ] ; then
+    exit 1
+  fi
+}
+
 # Set up the anaconda environment
 ./00SetupAnaconda.sh
+checkError
 
 rm -rf conda
 
@@ -13,9 +20,12 @@ cp conda/miricle-*-py27.0.txt /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NU
 # Build cr_sim_ramp_fit
 rm -rf cr_sim_ramp_fit
 svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/prototypes/cr_sim_ramp_fit
+checkError
+
 cd cr_sim_ramp_fit
 mv ../02CrSimRampFit.sh .
 ./02CrSimRampFit.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+checkError
 
 file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep cr-sim-ramp-fit`
 
@@ -28,9 +38,12 @@ cd ..
 # Build miri
 rm -rf miri
 svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/teams/miri
+checkError
+
 cd miri
 mv ../03Miri.sh .
 ./03Miri.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+checkError
 
 file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep miri-`
 
@@ -43,9 +56,12 @@ cd ..
 # Build pyspecsim
 rm -rf pySpecSim
 svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/pySpecSim/trunk/pySpecSim
+checkError
+
 cd pySpecSim
 mv ../04PySpecSim.sh .
 ./04PySpecSim.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+checkError
 
 file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep pyspecsim-`
 
@@ -59,9 +75,12 @@ cd ..
 # Build mirisim
 rm -rf mirisim
 svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/MIRISim/trunk/ mirisim
+checkError
+
 cd mirisim
 mv ../05MiriSim.sh .
 ./05MiriSim.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+checkError
 
 file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep mirisim-`
 
@@ -74,5 +93,6 @@ cd ..
 
 # Copy the MAC installations to the correct directory
 scp -r munki:/Users/jenkins/condaBuild/osx-64 /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+checkError
 
 # TODO: Install and test!
