@@ -53,6 +53,8 @@ checkError
 conda build purge
 checkError
 
+cd ..
+
 # The miri package is installed, we now start building the documentation
 source deactivate
 rm -rf *.rst conf.py make.bat Makefile _build _static _templates
