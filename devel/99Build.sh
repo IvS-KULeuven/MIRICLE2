@@ -58,7 +58,7 @@ cd ..
 
 # Build mirisim
 rm -rf mirisim
-svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/MIRISim/trunk/
+svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/MIRISim/trunk/ mirisim
 cd mirisim
 mv ../05MiriSim.sh .
 ./05MiriSim.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
