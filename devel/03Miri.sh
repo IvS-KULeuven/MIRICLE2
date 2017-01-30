@@ -64,3 +64,18 @@ checkError
 
 conda build purge
 checkError
+
+# The miri package is installed, we now start building the documentation
+source deactivate
+export PATH=/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin
+rm -rf *.rst conf.py make.bat Makefile _build _static _templates
+sphinx-apidoc -F -o . .
+checkError
+
+sed -e "s/TODAY/`date +"%Y%m%d"`/g" /srv/www/www.miricle.org/doc/conf.py > conf.py
+
+make html
+checkError
+
+make latexpdf
+checkError
