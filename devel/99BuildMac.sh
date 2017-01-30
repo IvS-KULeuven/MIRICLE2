@@ -21,14 +21,22 @@ svn checkout https://aeon.stsci.edu/ssb/svn/jwst/trunk/teams/miri
 cd miri
 mv ../03MiriMac.sh .
 ./03MiriMac.sh /Users/jenkins/condaBuild/
-
+cd ..
 
 # Build pyspecsim
-cd ..
 rm -rf pySpecSim
 svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/pySpecSim/trunk/pySpecSim
 cd pySpecSim
 mv ../04PySpecSimMac.sh .
 ./04PySpecSimMac.sh /Users/jenkins/condaBuild/
+
+cd ..
+
+# Build mirisim
+rm -rf mirisim
+svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/MIRISim/trunk/
+cd mirisim
+mv ../05MiriSimMac.sh .
+./05MiriSimMac.sh /Users/jenkins/condaBuild/
 
 cd ..
