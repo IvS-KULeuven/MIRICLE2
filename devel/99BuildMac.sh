@@ -34,7 +34,7 @@ cd ..
 
 # Build mirisim
 rm -rf mirisim
-svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/MIRISim/trunk/
+svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/MIRISim/trunk/ mirisim
 cd mirisim
 mv ../05MiriSimMac.sh .
 ./05MiriSimMac.sh /Users/jenkins/condaBuild/
