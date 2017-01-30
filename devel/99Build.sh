@@ -42,18 +42,35 @@ cd ..
 
 # Build pyspecsim
 rm -rf pySpecSim
-svn checkout https://forge.roe.ac.uk/svn/pySpecSim/trunk/pySpecSim
+svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/pySpecSim/trunk/pySpecSim
 cd pySpecSim
 mv ../04PySpecSim.sh .
 ./04PySpecSim.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
 
 file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep pyspecsim-`
 
-# Add miri to the install files
+# Add pyspecsim to the install files
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/$file" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
 echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/$file" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
 
 cd ..
+
+
+# Build mirisim
+rm -rf mirisim
+svn checkout --username WimDeMeester https://forge.roe.ac.uk/svn/MIRISim/trunk/
+cd mirisim
+mv ../05MiriSim.sh .
+./05MiriSim.sh /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
+
+file=`ls /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/ | grep mirisim-`
+
+# Add mirisim to the install files
+echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/linux-64/$file" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-linux-py27.0.txt
+echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/$file" >> /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/miricle-osx-py27.0.txt
+
+cd ..
+
 
 # Copy the MAC installations to the correct directory
 scp -r munki:/Users/jenkins/condaBuild/osx-64 /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
