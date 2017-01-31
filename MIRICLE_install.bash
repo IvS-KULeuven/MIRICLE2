@@ -167,6 +167,33 @@ function getVersionNumberToInstall {
   echoLog "${bold}Requested installation version $version of the $flavor track.${normal}"
 
   echoLog "Latest available $flavor version is $latestVersion."
+
+  # Set the flavorName
+  setFlavorName
+  checkError ${PIPESTATUS[0]}
+
+  # Check if we already have this version installed
+  for env in `conda env list | grep miricle$flavorName | awk '{print $2}'`
+  do
+    if [ -f $env/version ]; then
+      alreadyInstalled=`sed "s/miricle$flavorName //g" $env/version`
+      if [ "$version" -eq "$alreadyInstalled" ] ; then
+        condaEnvName=`conda env list | grep "$env$" | awk '{print $1}'`
+        echoLog "${bold}Requested installation version $version of the $flavor track is already installed in the $condaEnvName environment."
+        echoLog ""
+        echoLog "You can use it by executing the following command:"
+        echoLog ""
+        echoLog "source activate $condaEnvName${normal}"
+        echoLog ""
+        read -p "Do you really want to reinstall this version? " -n 1 -r
+        echo    # (optional) move to a new line
+        if [[ ! $REPLY =~ ^[Yy]$ ]]
+        then
+          exit
+        fi
+      fi
+    fi
+  done
 }
 
 # Sets the flavor name
@@ -278,10 +305,6 @@ checkError ${PIPESTATUS[0]}
 # Work around LC_CTYPE problem on MAC
 LCCTYPE=$LC_CTYPE
 unset LC_CTYPE
-
-# Set the flavorName
-setFlavorName
-checkError ${PIPESTATUS[0]}
 
 source activate root
 checkError ${PIPESTATUS[0]}
