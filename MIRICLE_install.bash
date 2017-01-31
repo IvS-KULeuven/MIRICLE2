@@ -173,7 +173,7 @@ function getVersionNumberToInstall {
   checkError ${PIPESTATUS[0]}
 
   # Check if we already have this version installed
-  for env in `conda env list | grep miricle$flavorName | awk '{print $2}'`
+  for env in `conda env list | grep miricle$flavorName | awk 'NF>1{print $NF}'`
   do
     if [ -f $env/version ]; then
       alreadyInstalled=`sed "s/miricle$flavorName //g" $env/version`
