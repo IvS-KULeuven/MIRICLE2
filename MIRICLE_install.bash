@@ -238,6 +238,8 @@ do
   shift
 done
 
+cwd=`pwd`
+
 # Create and make a log file.
 LOG=~/.miricle/$flavor/`date +%y%m%d-%H%M%S`
 mkdir -p $LOG
@@ -306,13 +308,33 @@ echoLog "Creating the miricle$flavorName conda environment"
 conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 rm miricle-$os-py27.0.txt
 
-# Do we still need to install some packages manually... Like stscipython and psfutils (https://github.com/spacetelescope/psfutils.git)
-#pip install stscipython >$LOG/stscipython.log 2>&1
-#pipResult $? stscipython
+# Install the datafiles
+if [ ! -d $MIRICLE_ROOT ]; then
+  mkdir $MIRICLE_ROOT
+fi
 
+# Check the version of the files we need.
+$download http://www.miricle.org/MIRICLE2/$flavor/$version/pysynphot_data
+data_version=`cat pysynphot_data`
+installData=0
 
-# TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
-# TODO: Do we need the X11 development files? -> See line 162 - 175
+# Compare the installed vesrion with the version on the server
+cmp -s pysynphot_data $MIRICLE_ROOT/pysynphot_data || installData=1
+
+# Install the pysynphot data
+if [[ "$installData" == "1" ]]; then
+  echoLog "${bold}Installing the datafiles${normal}"
+  rm -rf $MIRICLE_ROOT/cdbs
+  cd $MIRICLE_ROOT
+  $download http://www.miricle.org/MIRICLE/pysynphot_data-$data_version.tar.gz
+  tar zxf pysynphot_data-$data_version.tar.gz
+  rm -f pysynphot_dat*
+  mv $cwd/pysynphot_data $MIRICLE_ROOT
+else
+  echoLog "pysynphot datafiles are already installed."
+  rm $cwd/pysynphot_data
+fi
+
 
 echoLog ""
 echoLog "To use the $miricleInstall environment:"
