@@ -315,18 +315,26 @@ fi
 
 cd $MIRICLE_ROOT
 
-# Test if our reference exist or if it is older than the date of the distant file.
-# The purpose is to avoid downloading pysynphot if nothing changed server side from our previous update
-if [ ! -e "pysynphot_dl_date" ] || [ pysynphot_dl_date -ot http://www.miricle.org/MIRICLE/extra/pysynphot_dat.tar.gz ]; then
- echoLog "${bold}Installing the datafiles${normal}"
- rm -rf $MIRICLE_ROOT/cdbs
- cd $MIRICLE_ROOT
- $download http://www.miricle.org/MIRICLE/extra/pysynphot_dat.tar.gz
- tar zxf pysynphot_dat.tar.gz
- rm -f pysynphot_dat.tar.gz
- touch "pysynphot_dl_date" # Keep a trace of the date of download. When the file change on the server, we will download again
+# Check the version of the files we need.
+$download http://www.miricle.org/MIRICLE2/$flavor/$version/pysynphot_data
+
+installData=0
+
+# Compare the installed vesrion with the version on the server
+cmp -s pysynphot_data $MIRICLE_ROOT/pysynphot_data || installData=1
+
+# Install the pysynphot data
+if [[ "$installData" == "1" ]]; then
+  echoLog "${bold}Installing the datafiles${normal}"
+  rm -rf $MIRICLE_ROOT/cdbs
+  cd $MIRICLE_ROOT
+  $download http://www.miricle.org/MIRICLE/pysynphot_data-`cat pysynphot_data`.tar.gz
+  tar zxf pysynphot_data-`cat pysynphot_data`.tar.gz
+  rm -f pysynphot_dat*
+  mv pysynphot_data $MIRICLE_ROOT
 else
   echoLog "pysynphot datafiles are already installed."
+  rm pysynphot_data
 fi
 
 
