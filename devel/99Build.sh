@@ -90,6 +90,14 @@ echo "http://www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/osx-64/$file" >> /sr
 
 cd ..
 
+# Create a file with the version number of the pysynphot data files
+
+while read line; do
+  version=$line
+done < /srv/www/www.miricle.org/MIRICLE2/pysynphot_data/pysynphot_data_version
+
+echo $version > /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}/pysynphot_data
+
 
 # Copy the MAC installations to the correct directory
 scp -r munki:/Users/jenkins/condaBuild/osx-64 /srv/www/www.miricle.org/MIRICLE2/devel/${BUILD_NUMBER}
