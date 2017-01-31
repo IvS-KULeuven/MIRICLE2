@@ -304,7 +304,11 @@ if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName'$' | wc -l` -
   echoLog ""
   verboseEcho "Copy miricle$flavorName to miricle$flavorName.`date +%Y%m%d`"
   echoLog "${bold}Clone the old miricle$flavorName environment${normal}"
-  conda create --yes --name miricle$flavorName.`date +%Y%m%d` --clone miricle$flavorName 2>&1 | tee -a $LOG/log.txt > /dev/null
+  date=`date +%Y%m%d`
+  if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName.$date'$' | wc -l` -gt 0 ] ; then
+    conda env remove -q --yes --name miricle$flavorName.$date 2>&1 | tee -a $LOG/log.txt > /dev/null
+  fi
+  conda create --yes --name miricle$flavorName.$date --clone miricle$flavorName 2>&1 | tee -a $LOG/log.txt > /dev/null
   checkError ${PIPESTATUS[0]}
   verboseEcho "Remove the miricle$flavorName python environment"
   conda env remove --yes --name miricle$flavorName 2>&1 | tee -a $LOG/log.txt > /dev/null
@@ -353,6 +357,17 @@ if [[ "$installData" == "1" ]]; then
 else
   echoLog "pysynphot datafiles are already installed."
   rm $cwd/pysynphot_data
+fi
+
+# Write version number to the env directory
+if [ -z ${CONDA_PREFIX+x} ]; then
+  if [ -z ${CONDA_ENV_PATH+x} ]; then
+    echo "";
+  else
+    echo miricle$flavorName $version > $CONDA_ENV_PATH/version
+  fi
+else
+  echo miricle$flavorName $version > $CONDA_PREFIX/version
 fi
 
 
