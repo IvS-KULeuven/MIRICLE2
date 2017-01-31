@@ -97,7 +97,7 @@ https://conda.anaconda.org/astropy/linux-64/spherical-geometry-1.0.6-py27_0.tar.
 https://conda.anaconda.org/bioconda/linux-64/pysftp-0.2.8-py27_0.tar.bz2
 
 http://ssb.stsci.edu/astroconda/linux-64/astroimtools-0.1.1-py27_1.tar.bz2
-http://ssb.stsci.edu/astroconda/linux-64/imexam-0.6.3-np111py27_0.tar.bz2
+http://ssb.stsci.edu/astroconda/linux-64/imexam-0.6.3-py27_1.tar.bz2
 http://ssb.stsci.edu/astroconda/linux-64/pyqtgraph-0.10.0-py27_0.tar.bz2
 http://ssb.stsci.edu/astroconda/linux-64/pywcs-1.12.1-np111py27_0.tar.bz2
 http://ssb.stsci.edu/astroconda/linux-64/specutils-0.2.1-py27_1.tar.bz2
