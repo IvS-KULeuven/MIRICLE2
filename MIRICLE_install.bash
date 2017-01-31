@@ -359,6 +359,8 @@ else
   rm $cwd/pysynphot_data
 fi
 
+source activate miricle$flavorName
+
 # Write version number to the env directory
 if [ -z ${CONDA_PREFIX+x} ]; then
   if [ -z ${CONDA_ENV_PATH+x} ]; then
