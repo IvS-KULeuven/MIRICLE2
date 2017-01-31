@@ -167,6 +167,33 @@ function getVersionNumberToInstall {
   echoLog "${bold}Requested installation version $version of the $flavor track.${normal}"
 
   echoLog "Latest available $flavor version is $latestVersion."
+
+  # Set the flavorName
+  setFlavorName
+  checkError ${PIPESTATUS[0]}
+
+  # Check if we already have this version installed
+  for env in `conda env list | grep miricle$flavorName | awk '{print $2}'`
+  do
+    if [ -f $env/version ]; then
+      alreadyInstalled=`sed "s/miricle$flavorName //g" $env/version`
+      if [ "$version" -eq "$alreadyInstalled" ] ; then
+        condaEnvName=`conda env list | grep "$env$" | awk '{print $1}'`
+        echoLog "${bold}Requested installation version $version of the $flavor track is already installed in the $condaEnvName environment."
+        echoLog ""
+        echoLog "You can use it by executing the following command:"
+        echoLog ""
+        echoLog "source activate $condaEnvName${normal}"
+        echoLog ""
+        read -p "Do you really want to reinstall this version? " -n 1 -r
+        echo    # (optional) move to a new line
+        if [[ ! $REPLY =~ ^[Yy]$ ]]
+        then
+          exit
+        fi
+      fi
+    fi
+  done
 }
 
 # Sets the flavor name
@@ -175,6 +202,14 @@ function setFlavorName {
     flavorName=""
   else
     flavorName=".$flavor"
+  fi
+}
+
+function checkError {
+  if [ ! $1 -eq 0 ]; then
+    printf "${bold}Installation failed!${normal}\n"
+    echo "Please raise a bug at http://www.miricle.org/bugzilla/ and attach your logfile: $LOG/log.txt"
+    exit
   fi
 }
 
@@ -250,27 +285,29 @@ echoLog ""
 
 # Check if there is a working internet connection
 checkInternet
+checkError ${PIPESTATUS[0]}
 
 # Check if there is a newer version of the installation script
 checkUpdateOfScript
+checkError ${PIPESTATUS[0]}
 
 # Check if anaconda is installed
 checkAnacondaInstalled
+checkError ${PIPESTATUS[0]}
 
 # Set MIRICLE_ROOT
 if [ -z "$MIRICLE_ROOT" ] ; then export MIRICLE_ROOT=$HOME/MIRICLE ; fi
 
 # Check the version number to install
 getVersionNumberToInstall
+checkError ${PIPESTATUS[0]}
 
 # Work around LC_CTYPE problem on MAC
 LCCTYPE=$LC_CTYPE
 unset LC_CTYPE
 
-# Set the flavorName
-setFlavorName
-
 source activate root
+checkError ${PIPESTATUS[0]}
 
 # Remove all old MIRICLE environments if the clean option is selected
 if [ -n "$clean" ] ; then
@@ -279,7 +316,8 @@ if [ -n "$clean" ] ; then
   for env in `conda env list | grep miricle$flavorName.2 | awk '{print $1}'`
   do
     echo "${bold}Removing $env${normal}"
-    conda env remove -q --yes --name $env 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+    conda env remove -q --yes --name $env 2>&1 | tee -a $LOG/log.txt > /dev/null
+    checkError ${PIPESTATUS[0]}
   done
 fi
 
@@ -289,9 +327,15 @@ if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName'$' | wc -l` -
   echoLog ""
   verboseEcho "Copy miricle$flavorName to miricle$flavorName.`date +%Y%m%d`"
   echoLog "${bold}Clone the old miricle$flavorName environment${normal}"
-  conda create --yes --name miricle$flavorName.`date +%Y%m%d` --clone miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  date=`date +%Y%m%d`
+  if [ `conda env list | cut -d' ' -f 1 | grep '^'miricle$flavorName.$date'$' | wc -l` -gt 0 ] ; then
+    conda env remove -q --yes --name miricle$flavorName.$date 2>&1 | tee -a $LOG/log.txt > /dev/null
+  fi
+  conda create --yes --name miricle$flavorName.$date --clone miricle$flavorName 2>&1 | tee -a $LOG/log.txt > /dev/null
+  checkError ${PIPESTATUS[0]}
   verboseEcho "Remove the miricle$flavorName python environment"
-  conda env remove --yes --name miricle$flavorName 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+  conda env remove --yes --name miricle$flavorName 2>&1 | tee -a $LOG/log.txt > /dev/null
+  checkError ${PIPESTATUS[0]}
 fi
 
 # Check the operating system
@@ -303,9 +347,11 @@ fi
 
 verboseEcho "Downloading conda packages from http://www.miricle.org/MIRICLE2/$flavor/$version/miricle-$os-py27.0.txt"
 $download http://www.miricle.org/MIRICLE2/$flavor/$version/miricle-$os-py27.0.txt
+checkError ${PIPESTATUS[0]}
 
 echoLog "Creating the miricle$flavorName conda environment"
-conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
+conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/log.txt
+checkError ${PIPESTATUS[0]}
 rm miricle-$os-py27.0.txt
 
 # Install the datafiles
@@ -320,6 +366,7 @@ installData=0
 
 # Compare the installed vesrion with the version on the server
 cmp -s pysynphot_data $MIRICLE_ROOT/pysynphot_data || installData=1
+checkError ${PIPESTATUS[0]}
 
 # Install the pysynphot data
 if [[ "$installData" == "1" ]]; then
@@ -333,6 +380,19 @@ if [[ "$installData" == "1" ]]; then
 else
   echoLog "pysynphot datafiles are already installed."
   rm $cwd/pysynphot_data
+fi
+
+source activate miricle$flavorName
+
+# Write version number to the env directory
+if [ -z ${CONDA_PREFIX+x} ]; then
+  if [ -z ${CONDA_ENV_PATH+x} ]; then
+    echo "";
+  else
+    echo miricle$flavorName $version > $CONDA_ENV_PATH/version
+  fi
+else
+  echo miricle$flavorName $version > $CONDA_PREFIX/version
 fi
 
 
