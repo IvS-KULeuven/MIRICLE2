@@ -238,6 +238,8 @@ do
   shift
 done
 
+cwd=`pwd`
+
 # Create and make a log file.
 LOG=~/.miricle/$flavor/`date +%y%m%d-%H%M%S`
 mkdir -p $LOG
@@ -306,13 +308,27 @@ echoLog "Creating the miricle$flavorName conda environment"
 conda create --yes --name miricle$flavorName --file miricle-$os-py27.0.txt 2>&1 | tee -a $LOG/anaconda.log $LOG/log.txt > /dev/null
 rm miricle-$os-py27.0.txt
 
-# Do we still need to install some packages manually... Like stscipython and psfutils (https://github.com/spacetelescope/psfutils.git)
-#pip install stscipython >$LOG/stscipython.log 2>&1
-#pipResult $? stscipython
+# Install the datafiles
+if [ ! -d $MIRICLE_ROOT ]; then
+  mkdir $MIRICLE_ROOT
+fi
 
+cd $MIRICLE_ROOT
 
-# TODO: Do we need git? If so, we should check if git is installed -> See line 148 - 156
-# TODO: Do we need the X11 development files? -> See line 162 - 175
+# Test if our reference exist or if it is older than the date of the distant file.
+# The purpose is to avoid downloading pysynphot if nothing changed server side from our previous update
+if [ ! -e "pysynphot_dl_date" ] || [ pysynphot_dl_date -ot http://www.miricle.org/MIRICLE/extra/pysynphot_dat.tar.gz ]; then
+ echoLog "${bold}Installing the datafiles${normal}"
+ rm -rf $MIRICLE_ROOT/cdbs
+ cd $MIRICLE_ROOT
+ $download http://www.miricle.org/MIRICLE/extra/pysynphot_dat.tar.gz
+ tar zxf pysynphot_dat.tar.gz
+ rm -f pysynphot_dat.tar.gz
+ touch "pysynphot_dl_date" # Keep a trace of the date of download. When the file change on the server, we will download again
+else
+  echoLog "pysynphot datafiles are already installed."
+fi
+
 
 echoLog ""
 echoLog "To use the $miricleInstall environment:"
