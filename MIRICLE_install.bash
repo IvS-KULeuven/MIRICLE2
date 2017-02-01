@@ -209,6 +209,7 @@ function checkError {
   if [ ! $1 -eq 0 ]; then
     printf "${bold}Installation failed!${normal}\n"
     echo "Please raise a bug at http://www.miricle.org/bugzilla/ and attach your logfile: $LOG/log.txt"
+    rm miricle-*-py27.0.txt
     exit
   fi
 }
