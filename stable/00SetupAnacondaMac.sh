@@ -4,7 +4,7 @@ function checkError {
   fi
 }
 
-export PATH=/export/disk/anaconda.42/bin:$PATH
+export PATH=/Users/jenkins/anaconda2/bin:$PATH
 
 source activate root
 
