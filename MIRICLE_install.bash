@@ -177,19 +177,21 @@ function getVersionNumberToInstall {
   do
     if [ -f $env/version ]; then
       alreadyInstalled=`sed "s/miricle$flavorName //g" $env/version`
-      if [ "$version" -eq "$alreadyInstalled" ] ; then
-        condaEnvName=`conda env list | grep "$env$" | awk '{print $1}'`
-        echoLog "${bold}Requested installation version $version of the $flavor track is already installed in the $condaEnvName environment."
-        echoLog ""
-        echoLog "You can use it by executing the following command:"
-        echoLog ""
-        echoLog "source activate $condaEnvName${normal}"
-        echoLog ""
-        read -p "Do you really want to reinstall this version? " -n 1 -r
-        echo    # (optional) move to a new line
-        if [[ ! $REPLY =~ ^[Yy]$ ]]
-        then
-          exit
+      if [[ $alreadyInstalled != *"miricle"* ]]; then
+        if [ "$version" -eq "$alreadyInstalled" ] ; then
+          condaEnvName=`conda env list | grep "$env$" | awk '{print $1}'`
+          echoLog "${bold}Requested installation version $version of the $flavor track is already installed in the $condaEnvName environment."
+          echoLog ""
+          echoLog "You can use it by executing the following command:"
+          echoLog ""
+          echoLog "source activate $condaEnvName${normal}"
+          echoLog ""
+          read -p "Do you really want to reinstall this version? " -n 1 -r
+          echo    # (optional) move to a new line
+          if [[ ! $REPLY =~ ^[Yy]$ ]]
+          then
+            exit
+          fi
         fi
       fi
     fi
