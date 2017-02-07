@@ -14,6 +14,7 @@ https://repo.continuum.io/pkgs/free/linux-64/cycler-0.10.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/cython-0.25.2-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/dask-0.12.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/decorator-4.0.10-py27_1.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/docutils-0.13.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/enum34-1.1.6-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/enaml-0.9.8-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/freetype-2.5.5-1.tar.bz2
@@ -27,6 +28,7 @@ https://repo.continuum.io/pkgs/free/linux-64/icu-54.1-0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/ipython-5.1.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/ipython_genutils-0.1.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/jbig-2.1-0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/jedi-0.9.0-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/jinja2-2.8-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/jpeg-8d-2.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/jsonschema-2.5.1-py27_0.tar.bz2
@@ -42,6 +44,7 @@ https://repo.continuum.io/pkgs/free/linux-64/markupsafe-0.23-py27_2.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/matplotlib-1.5.3-np111py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/mkl-11.3.3-0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/mpmath-0.19-py27_1.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/nbconvert-4.2.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/networkx-1.11-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/nose-1.3.7-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/numpy-1.11.3-py27_0.tar.bz2
@@ -52,15 +55,19 @@ https://repo.continuum.io/pkgs/free/linux-64/partd-0.3.6-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/path.py-8.2.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pathlib2-2.1.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/petl-1.1.0-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/pep8-1.7.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pexpect-4.0.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pickleshare-0.7.4-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pil-1.1.7-py27_2.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pillow-3.4.2-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/prompt_toolkit-1.0.9-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/psutil-5.1.2-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/ptyprocess-0.5.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/py-1.4.31-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pyasn1-0.1.9-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/pyflakes-1.5.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pygments-2.1.3-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/pylint-1.6.4-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pymssql-2.1.3-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pyparsing-2.1.4-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pyqt-5.6.0-py27_1.tar.bz2
@@ -70,9 +77,13 @@ https://repo.continuum.io/pkgs/free/linux-64/python-2.7.12-1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/python-dateutil-2.6.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pytz-2016.10-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/pyyaml-3.12-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/pyzmq-16.0.2-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/qt-5.6.2-0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/qtawesome-0.4.4-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/qtconsole-4.2.1-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/qtpy-1.2.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/requests-2.12.3-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/rope-0.9.4-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/scikit-image-0.12.3-np111py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/scipy-0.18.1-np111py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/setuptools-27.2.0-py27_0.tar.bz2
@@ -80,6 +91,7 @@ https://repo.continuum.io/pkgs/free/linux-64/simplegeneric-0.8.1-py27_1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/singledispatch-3.4.0.3-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/sip-4.18-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/six-1.10.0-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/sphinx-1.5.1-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/spyder-3.0.2-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/sqlite-3.13.0-0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/ssl_match_hostname-3.4.0.2-py27_1.tar.bz2
