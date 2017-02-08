@@ -102,7 +102,7 @@ echo $version > /srv/www/www.miricle.org/MIRICLE2/stable/${BUILD_NUMBER}/pysynph
 
 
 # Copy the MAC installations to the correct directory
-scp -r munki:/Users/jenkins/condaBuild/osx-64 /srv/www/www.miricle.org/MIRICLE2/stable/${BUILD_NUMBER}
+scp -r munki:/Users/jenkins/condaBuildStable/osx-64 /srv/www/www.miricle.org/MIRICLE2/stable/${BUILD_NUMBER}
 checkError
 
 # TODO: Install and test!

@@ -14,7 +14,7 @@ rm -rf conda
 git clone -b conda-test https://github.com/IvS-KULeuven/MIRICLE2.git conda
 checkError
 
-rm -rf /Users/jenkins/condaBuild
+rm -rf /Users/jenkins/condaBuildTest
 
 # Build the packages
 rm -rf cr_sim_ramp_fit
@@ -23,7 +23,7 @@ checkError
 
 cd cr_sim_ramp_fit
 mv ../02CrSimRampFitMac.sh .
-./02CrSimRampFitMac.sh /Users/jenkins/condaBuild/
+./02CrSimRampFitMac.sh /Users/jenkins/condaBuildTest/
 checkError
 
 cd ..
@@ -33,7 +33,7 @@ checkError
 
 cd miri
 mv ../03MiriMac.sh .
-./03MiriMac.sh /Users/jenkins/condaBuild/
+./03MiriMac.sh /Users/jenkins/condaBuildTest/
 checkError
 cd ..
 
@@ -44,7 +44,7 @@ checkError
 
 cd pySpecSim
 mv ../04PySpecSimMac.sh .
-./04PySpecSimMac.sh /Users/jenkins/condaBuild/
+./04PySpecSimMac.sh /Users/jenkins/condaBuildTest/
 checkError
 
 cd ..
@@ -56,7 +56,7 @@ checkError
 
 cd mirisim
 mv ../05MiriSimMac.sh .
-./05MiriSimMac.sh /Users/jenkins/condaBuild/
+./05MiriSimMac.sh /Users/jenkins/condaBuildTest/
 checkError
 
 cd ..
