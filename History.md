@@ -2,8 +2,8 @@
 
 ## Version 6.x
 
-+ ### xx/02/2017
- + 6.00 (Wim De Meester): Move to a conda based installation. Bug 226: Tracing dependencies in MIRICLE / mirisim
++ ### 13/02/2017
+ + 6.00 (Wim De Meester): Move to a conda based installation. Bug 226: Tracing dependencies in MIRICLE / mirisim, Bug 232: Check installed version
 
 ## Version 5.x
 
