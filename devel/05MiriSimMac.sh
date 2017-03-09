@@ -26,7 +26,7 @@ cd build/mirisim
 touch meta.yaml
 echo "package:" > meta.yaml
 echo "  name: mirisim" >> meta.yaml
-version=`grep "__version__ =" ../../mirisim/lib/__init__.py | sed 's/__version__ = "//g'  | sed 's/"//g'`
+version=`grep "__version__ =" ../../mirisim/__init__.py | sed 's/__version__ = "//g'  | sed 's/"//g'`
 echo "  version: \"$version\"" >> meta.yaml
 echo "" >> meta.yaml
 echo "source:" >> meta.yaml

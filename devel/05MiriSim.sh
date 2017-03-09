@@ -26,7 +26,7 @@ cd build/mirisim
 touch meta.yaml
 echo "package:" > meta.yaml
 echo "  name: mirisim" >> meta.yaml
-version=`grep "__version__ =" ../../mirisim/lib/__init__.py | sed 's/__version__ = "//g'  | sed 's/"//g'`
+version=`grep "__version__ =" ../../mirisim/__init__.py | sed 's/__version__ = "//g'  | sed 's/"//g'`
 echo "  version: \"$version\"" >> meta.yaml
 echo "" >> meta.yaml
 echo "source:" >> meta.yaml
@@ -54,6 +54,14 @@ conda build purge
 checkError
 
 cd ..
+
+# Execute the tests
+#cd mirisim/tests/
+#export PYSYN_CDBS=/var/lib/jenkins/workspace/MIRICLE-pysynphot-data/cdbs/
+
+#TODO: Install miri, ... from $outputdir
+#py.test -vv --capture=no --showlocals
+#cd ../..
 
 # The miri package is installed, we now start building the documentation
 source deactivate
