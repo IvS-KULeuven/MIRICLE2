@@ -61,7 +61,8 @@ export PYSYN_CDBS=/var/lib/jenkins/workspace/MIRICLE-pysynphot-data/cdbs/
 
 # Install miri, ... from $outputdir
 conda install -y -c $outputdir miri
-conda install -y libffi
+# Normally, we don't need the next command. Should be installed by the miricle-linux-py27 file.
+#conda install -y libffi
 conda install -y pytest-cov
 
 py.test -vv --cov=. --cov-report xml --capture=no --showlocals
