@@ -44,6 +44,7 @@ https://repo.continuum.io/pkgs/free/linux-64/jupyter-1.0.0-py27_3.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/jupyter_client-4.4.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/jupyter_console-5.0.0-py27_0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/jupyter_core-4.2.1-py27_0.tar.bz2
+https://repo.continuum.io/pkgs/free/linux-64/libffi-3.2.1-1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/libgfortran-3.0.0-1.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/libpng-1.6.22-0.tar.bz2
 https://repo.continuum.io/pkgs/free/linux-64/libsodium-1.0.10-0.tar.bz2
