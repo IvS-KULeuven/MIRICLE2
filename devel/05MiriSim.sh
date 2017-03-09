@@ -56,12 +56,17 @@ checkError
 cd ..
 
 # Execute the tests
-#cd mirisim/tests/
-#export PYSYN_CDBS=/var/lib/jenkins/workspace/MIRICLE-pysynphot-data/cdbs/
+cd mirisim/tests/
+export PYSYN_CDBS=/var/lib/jenkins/workspace/MIRICLE-pysynphot-data/cdbs/
 
-#TODO: Install miri, ... from $outputdir
-#py.test -vv --capture=no --showlocals
-#cd ../..
+# Install miri, ... from $outputdir
+conda install -y -c $outputdir miri
+conda install -y libffi
+conda install -y pytest-cov
+
+py.test -vv --cov=. --cov-report xml --capture=no --showlocals
+
+cd ../..
 
 # The miri package is installed, we now start building the documentation
 source deactivate
