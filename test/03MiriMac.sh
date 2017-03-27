@@ -25,7 +25,7 @@ cd miri
 touch meta.yaml
 echo "package:" > meta.yaml
 echo "  name: miri" >> meta.yaml
-version=`grep version ../lib/__init__.py | sed "s/__version__ = '//g"  | sed "s/'//g"`
+version=`grep version ../__init__.py | sed "s/__version__ = '//g"  | sed "s/'//g"`
 echo "  version: \"$version\"" >> meta.yaml
 echo "" >> meta.yaml
 echo "source:" >> meta.yaml
