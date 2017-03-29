@@ -19,7 +19,7 @@
 #    --verbose
 #      show all installed python packages at the end of the installation
 
-MIRICLE_version="6.00"
+MIRICLE_version="6.01"
 
 # Make it possible to print bold characters
 bold=`tput bold`
@@ -103,7 +103,7 @@ function checkUpdateOfScript {
   verboseEcho ""
   verboseEcho "Checking if there is a newer version of the installation script available..."
   rm -f MIRICLE_install_version
-  $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/MIRICLE_install_version
+  $download http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install_version
   version_on_server=`cat MIRICLE_install_version`
   verboseEcho "Version of the used installation script is $MIRICLE_version. On the server, I found $version_on_server."
   uptodate=0
@@ -116,7 +116,7 @@ function checkUpdateOfScript {
     verboseEcho "Updating the MIRICLE install script."
     rm -f MIRICLE_install.bash
     rm -f MIRICLE_install_version
-    $download https://raw.githubusercontent.com/IvS-KULeuven/MIRICLE2/master/MIRICLE_install.bash
+    $download http://miri.ster.kuleuven.be/MIRICLE/MIRICLE_install.bash
     chmod +x MIRICLE_install.bash
     echoLog "MIRICLE installation script is updated."
     echoLog "Please rerun MIRICLE_install.bash to install MIRICLE."
