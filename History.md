@@ -2,6 +2,9 @@
 
 ## Version 6.x
 
++ ### 29/03/2017
+ + 6.01 (Wim De Meester): Bug 314: Install script uses insecure github connection and fails
+
 + ### 13/02/2017
  + 6.00 (Wim De Meester): Move to a conda based installation. Bug 226: Tracing dependencies in MIRICLE / mirisim, Bug 232: Check installed version
 
